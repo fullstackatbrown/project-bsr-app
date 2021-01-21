@@ -21,5 +21,23 @@ export const globalStyles = StyleSheet.create({
   }, 
   text: {
     fontSize: 14
+  }, 
+
+  dropdownContainer: {
+    backgroundColor: "#68B39E", 
+    width: "32%", 
+    marginVertical: 26,
+
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,  
+    elevation: 5, 
+  }, 
+  dropdownStyle: {
+    fontSize: 14,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    color: "white", 
   }
 });
