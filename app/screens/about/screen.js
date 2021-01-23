@@ -29,7 +29,7 @@ const About = () => {
     </Text>;
 
   return(
-    <View style={viewStyleDark}>
+    <View style={globalStyles.viewStyleLight}>
       <ScrollView>
         <Text style={globalStyles.headingOneStyleLight}>{'>'} ABOUT BSR</Text> 
         <Image source={require('../../assets/bsr_logo.png')} style={globalStyles.logoStyle} />
