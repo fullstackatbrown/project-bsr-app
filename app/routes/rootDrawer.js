@@ -11,9 +11,9 @@ const Drawer = createDrawerNavigator();
 const RootDrawer = () => {
 	return (
 		<Drawer.Navigator drawerStyle={styles.drawer}>
-			<Drawer.Screen name="Stream" component={StreamStack} />
-			<Drawer.Screen name="Schedule" component={ScheduleStack} />
-			<Drawer.Screen name="About" component={AboutStack} />
+          <Drawer.Screen name="Stream" component={StreamStack} />
+          <Drawer.Screen name="Schedule" component={ScheduleStack} />
+          <Drawer.Screen name="About" component={AboutStack} />
 		</Drawer.Navigator>
 	);
 };
