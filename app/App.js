@@ -1,12 +1,20 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 
 import RootDrawer from './routes/rootDrawer';
 
+const MyTheme = {
+  ...DefaultTheme, 
+  colors: {
+    ...DefaultTheme.colors, 
+    background: "#F5ECD5"
+  }
+};
+
 const App = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       <RootDrawer />
     </NavigationContainer>
   );
