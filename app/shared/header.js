@@ -8,15 +8,25 @@ const Header = ({ navigation }) => {
     navigation.openDrawer();
   };
 
+  const toggleMode = () => {
+    // navigation.openDrawer();
+  };
+
   return (
-    <View style={styles.header}>
-      <MaterialIcons name='menu' size={28} onPress={openMenu} style={styles.icon} />
+    <View style={headerStyles.header}>
+      <MaterialIcons name='menu' size={28} onPress={openMenu} style={headerStyles.menuIcon} />
+      <View style={headerStyles.toggleModeContainer}>
+        <MaterialIcons name='wb_sunny' size={24} />
+        <MaterialIcons name='toggle_off' size={24} onPress={toggleMode} />
+        <MaterialIcons name='nights_stay' size={24} />
+      </View>
+      
       <Text>Header (in shared/header.js)</Text>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
+export const headerStyles = StyleSheet.create({
   // TODO
   header: {
     width: '100%',
@@ -25,10 +35,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  icon: {
+  menuIcon: {
     position: 'absolute',
     left: 16,
-  }
+  },
+  // https://stackoverflow.com/questions/55258987/place-3-image-icons-in-a-row-in-react-native
+  toggleModeContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    position: 'absolute',
+    right: '5%'
+  },
+  
 });
 
 export default Header;

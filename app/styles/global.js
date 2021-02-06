@@ -36,31 +36,7 @@ export const globalStyles = StyleSheet.create({
     // alignItems: 'center',
     paddingLeft: '5%'
   },
-  containerLogo: {
-    backgroundColor: "#F5ECD5",
-    // flex: 1,
-    width: "20%",
-    height: "30%",
-		// justifyContent: 'flex-start',
-    // alignItems: 'center',
-    paddingLeft: '100%'
-  },
-  containerTrackDetails: {
-    backgroundColor: "#F5ECD5",
-    // flex: 1,
-		justifyContent: 'flex-start',
-    // alignItems: 'center',
-    paddingLeft: '25%',
-    paddingTop: "10%",
-    paddingBottom: "15%"
-  },
-  containerHostDetails: {
-    backgroundColor: "#F5ECD5",
-    flex: 1,
-		justifyContent: 'flex-start',
-    // alignItems: 'center',
-    paddingLeft: '15%',
-  }
+  
   
   // background: {
   //   backgroundColor: "#FAF8F0",
