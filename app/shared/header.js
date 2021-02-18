@@ -1,12 +1,22 @@
-import React from 'react';
-import { StyleSheet, Text, View} from 'react-native';
+import React, { useContext, useState } from 'react';
+import { StyleSheet, Text, View, Switch } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useTheme, ThemeContext } from '../ThemeContext';
 
 const Header = ({ navigation }) => {
 
   const openMenu = () => {
     navigation.openDrawer();
   };
+  const themeToggle = useTheme();
+  const currentTheme = useContext(ThemeContext);
+
+  const [switchMode, setSwitchMode] = useState(false);
+
+  function toggleSwitch() {
+    themeToggle.toggleMode();
+    setSwitchMode(x => !x);
+  }
 
   return (
     <View style={styles.header}>
@@ -15,7 +25,14 @@ const Header = ({ navigation }) => {
       </View>
       <View style={styles.modeControlContainer}>
         <MaterialIcons name='wb-sunny' size={24} style={styles.icon} />
-        <MaterialIcons name='toggle-off' size={40} style={styles.icon} />
+        <Switch
+          trackColor={{ false: "white", true: "white" }}
+          thumbColor={switchMode ? "black" : "#f4f3f4"}
+          ios_backgroundColor="black"
+          onValueChange={toggleSwitch}
+          value={switchMode}
+          style={styles.modeSwitch}
+        />
         <MaterialIcons name='nights-stay' size={24} style={styles.icon} />
       </View>
     </View>
@@ -30,9 +47,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  icon: {
-    marginHorizontal: 2
-  },
   openMenuContainer: {
     marginLeft: 20,
   }, 
@@ -41,6 +55,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center', 
     justifyContent: 'center', 
+  },
+  modeSwitch: {
+    transform: [{ scaleX: 0.6 }, { scaleY: 0.6 }],
   }
 });
 

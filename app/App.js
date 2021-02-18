@@ -1,21 +1,21 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 
 import LoadingScreen from './screens/loading/screen';
 import RootDrawer from './routes/rootDrawer';
-
-const MyTheme = {
-  ...DefaultTheme, 
-  colors: {
-    ...DefaultTheme.colors, 
-    background: "#F5ECD5"
-  }
-};
+import { CustomThemeProvider } from "./ThemeContext";
 
 const App = () => {
   const [displayLoading, setDisplayLoading] = useState(true);
   const [loadingError, setLoadingError] = useState(false);
+  const MyTheme = {
+    ...DefaultTheme, 
+    colors: {
+      ...DefaultTheme.colors, 
+      background: "#F5ECD5"
+    }
+  };
 
   // replace with actual data fetching function
   function getData() {
@@ -23,7 +23,8 @@ const App = () => {
     return new Promise(resolve => {
       setTimeout(() => {
         resolve('resolved');
-      }, 2000);
+      // }, 2000);
+      }, 0);
     });
   }
 
@@ -42,12 +43,14 @@ const App = () => {
   }, []);
 
   return (
-    <NavigationContainer theme={MyTheme}>
-      { (displayLoading) 
-        ? <LoadingScreen loadingError={loadingError} />
-        : <RootDrawer />
-      }
-    </NavigationContainer>
+    <CustomThemeProvider>
+      <NavigationContainer theme={MyTheme}>
+        { (displayLoading) 
+          ? <LoadingScreen loadingError={loadingError} />
+          : <RootDrawer />
+        }
+      </NavigationContainer>
+    </CustomThemeProvider>
   );
 };
 
