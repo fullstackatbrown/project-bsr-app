@@ -3,13 +3,24 @@ import { StyleSheet, View, Text } from 'react-native';
 
 const Loading = ({ loadingError }) => {
 
+  function renderDataFetchingText() {
+    // return "Fetching data...";
+    return `
+    > initializing groovy beats...
+    > loading the best DJs...
+    > downloading podcasts...
+    > grabbing a spicy with...
+    > welcome to bar...
+    `;
+  }
+
   return (
     <View style={styles.loadingContainer}>
       <View style={styles.textContainer}>
         <Text style={styles.textStyle}>
           { loadingError 
             ? "LOADING ERROR"
-            : "Fetching data..."
+            : renderDataFetchingText()
           }
         </Text>
         <View class="loader"></View>
@@ -22,28 +33,19 @@ const Loading = ({ loadingError }) => {
 const styles = StyleSheet.create({
   loadingContainer: {
     display: "flex",
-    justifyContent: "center", 
     alignItems: "center", 
     position: "absolute", 
     height: "100%", 
     width: "100%", 
-  }, 
-  textContainer: {
-    paddingVertical: "38%", 
-    // paddingHorizontal: "10%", 
-    width: "90%",
-    textAlign: "center",
-    justifyContent: "center",
-    alignItems: "center", 
-
-    borderRadius: 20, 
-    borderWidth: 3,
-    borderColor: "#68B39E", 
     backgroundColor: "#F5ECD5",
   }, 
+  textContainer: {
+    marginTop: "10%",
+    width: "94%",
+  }, 
   textStyle: {
-    fontSize: 36,
-    fontWeight: "bold",
+    fontSize: 18,
+    lineHeight: 32,
   }
 });
 
