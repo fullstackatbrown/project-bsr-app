@@ -14,9 +14,9 @@ const Header = ({ navigation }) => {
         <MaterialIcons name='menu' size={28} onPress={openMenu} style={styles.icon} />
       </View>
       <View style={styles.modeControlContainer}>
-        <MaterialIcons name='wb-sunny' size={28} style={styles.icon} />
-        <MaterialIcons name='toggle-off' size={30} style={styles.icon} />
-        <MaterialIcons name='nights-stay' size={28} style={styles.icon} />
+        <MaterialIcons name='wb-sunny' size={24} style={styles.icon} />
+        <MaterialIcons name='toggle-off' size={40} style={styles.icon} />
+        <MaterialIcons name='nights-stay' size={24} style={styles.icon} />
       </View>
     </View>
   );
@@ -39,6 +39,8 @@ const styles = StyleSheet.create({
   modeControlContainer: {
     marginRight: 20,
     flexDirection: 'row',
+    alignItems: 'center', 
+    justifyContent: 'center', 
   }
 });
 
