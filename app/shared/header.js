@@ -10,24 +10,35 @@ const Header = ({ navigation }) => {
 
   return (
     <View style={styles.header}>
-      <MaterialIcons name='menu' size={28} onPress={openMenu} style={styles.icon} />
-      <Text>Header (in shared/header.js)</Text>
+      <View style={styles.openMenuContainer}>
+        <MaterialIcons name='menu' size={28} onPress={openMenu} style={styles.icon} />
+      </View>
+      <View style={styles.modeControlContainer}>
+        <MaterialIcons name='wb-sunny' size={28} style={styles.icon} />
+        <MaterialIcons name='toggle-off' size={30} style={styles.icon} />
+        <MaterialIcons name='nights-stay' size={28} style={styles.icon} />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  // TODO
   header: {
     width: '100%',
     height: 100,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
   icon: {
-    position: 'absolute',
-    left: 16,
+    marginHorizontal: 2
+  },
+  openMenuContainer: {
+    marginLeft: 20,
+  }, 
+  modeControlContainer: {
+    marginRight: 20,
+    flexDirection: 'row',
   }
 });
 

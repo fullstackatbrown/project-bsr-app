@@ -42,9 +42,9 @@ const App = () => {
 
   return (
     <NavigationContainer theme={MyTheme}>
-      <RootDrawer />
       { (displayLoading) 
-          && <LoadingScreen loadingError={loadingError} />
+        ? <LoadingScreen loadingError={loadingError} />
+        : <RootDrawer />
       }
     </NavigationContainer>
   );
