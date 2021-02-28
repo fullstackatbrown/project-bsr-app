@@ -33,8 +33,8 @@ const App = () => {
     // eg: pass setDisplayLoading in as a prop and set to false when "reload" button clicked
     if (displayLoading) {
       getData().then(() => {
-        setDisplayLoading(true);
-        // setDisplayLoading(false);
+        // setDisplayLoading(true);
+        setDisplayLoading(false);
         setLoadingError(false);
       }).catch(() => {
         setLoadingError(true);
