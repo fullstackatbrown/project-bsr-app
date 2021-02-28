@@ -1,5 +1,6 @@
 import React from 'react';
 import { globalStyles, viewStyleDark } from '../../styles/global.js';
+// import { ViewModeContext } from '../screenContext.js';
 import { Text, Image, ScrollView, View, Linking, StyleSheet } from 'react-native';
 
 // TODO: add navbar and toggleable header
