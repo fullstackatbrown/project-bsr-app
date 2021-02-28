@@ -22,7 +22,10 @@ const Loading = ({ loadingError }) => {
     var stringIndex = 0;
     var aString = "";
 
-    var intervalId = setInterval(() => {
+    var messageIntervalId;
+    var blinkIntervalId;
+
+    messageIntervalId = setInterval(() => {
       aString += loadingMessageStrings[stringIndex];
       setCurMessageString(aString)
 
@@ -30,14 +33,18 @@ const Loading = ({ loadingError }) => {
         stringIndex += 1;
       }
       else {
-        setInterval(() => {
+        blinkIntervalId = setInterval(() => {
           setShowCursor((x) => !x);
         }, BLINK_INTERVAL);
-        clearInterval(intervalId);
+        clearInterval(messageIntervalId);
       }
 
     }, TEXT_DISPLAY_INTERVAL);
 
+    return () => {
+      clearInterval(messageIntervalId);
+      clearInterval(blinkIntervalId);
+    };
   }, []);
 
   function renderDataFetchingText() {
