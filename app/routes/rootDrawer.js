@@ -10,19 +10,31 @@ const Drawer = createDrawerNavigator();
 
 const RootDrawer = () => {
 	return (
-		<Drawer.Navigator drawerStyle={styles.drawer}>
-          <Drawer.Screen name="Stream" component={StreamStack} />
-          <Drawer.Screen name="Schedule" component={ScheduleStack} />
-          <Drawer.Screen name="About" component={AboutStack} />
-		</Drawer.Navigator>
+      <Drawer.Navigator drawerStyle={styles.drawer} drawerContentOptions={drawerContentOptions}>
+        <Drawer.Screen drawerStyle={styles.drawerBar} name=">&nbsp; LIVESTREAM" component={StreamStack} />
+        <Drawer.Screen name=">&nbsp; SHOW SCHEDULE" component={ScheduleStack} />
+        <Drawer.Screen name=">&nbsp; ABOUT BSR" component={AboutStack} />
+      </Drawer.Navigator>
 	);
 };
 
 const styles = StyleSheet.create({
   drawer: {
-		width: '100%',
-		// TODO
-  },
+    width: '100%',
+    backgroundColor: "#F5ECD5",
+    paddingTop: '20%'
+  }
 });
+
+const drawerContentOptions = {
+  itemStyle: { 
+    marginVertical: 8, 
+    marginHorizontal: 20 
+  },
+  labelStyle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+}
 
 export default RootDrawer;
