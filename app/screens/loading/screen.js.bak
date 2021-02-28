@@ -14,31 +14,28 @@ const Loading = ({ loadingError }) => {
     "> loading the best DJs...\n", 
     "> downloading podcasts...\n", 
     "> grabbing a spicy with...\n", 
-    "> welcome to bar... "
+    "> welcome to bar..."
   ];
 
   useEffect(() => {
+    loadAMessage(0, "");
+  }, []);
 
-    var stringIndex = 0;
-    var aString = "";
-
-    var intervalId = setInterval(() => {
+  function loadAMessage(stringIndex, aString) {
+    setTimeout(() => {
       aString += loadingMessageStrings[stringIndex];
       setCurMessageString(aString)
 
       if (stringIndex < loadingMessageStrings.length - 1) {
-        stringIndex += 1;
+        loadAMessage(stringIndex + 1, aString);
       }
       else {
         setInterval(() => {
           setShowCursor((x) => !x);
         }, BLINK_INTERVAL);
-        clearInterval(intervalId);
       }
-
     }, TEXT_DISPLAY_INTERVAL);
-
-  }, []);
+  }
 
   function renderDataFetchingText() {
     var text = curMessageString;

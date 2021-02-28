@@ -3,45 +3,22 @@ import { StyleSheet, View, Text } from 'react-native';
 
 const Loading = ({ loadingError }) => {
 
-  const BLINK_INTERVAL = 800;
-  const TEXT_DISPLAY_INTERVAL = 800;
   const [showCursor, setShowCursor] = useState(false);
-  const [onAnimationIndex, setOnAnimationIndex] = useState(0);
-  const [curMessageString, setCurMessageString] = useState("");
-
-  const loadingMessageStrings = [
-    "> initializing groovy beats...\n", 
-    "> loading the best DJs...\n", 
-    "> downloading podcasts...\n", 
-    "> grabbing a spicy with...\n", 
-    "> welcome to bar... "
-  ];
 
   useEffect(() => {
-
-    var stringIndex = 0;
-    var aString = "";
-
-    var intervalId = setInterval(() => {
-      aString += loadingMessageStrings[stringIndex];
-      setCurMessageString(aString)
-
-      if (stringIndex < loadingMessageStrings.length - 1) {
-        stringIndex += 1;
-      }
-      else {
-        setInterval(() => {
-          setShowCursor((x) => !x);
-        }, BLINK_INTERVAL);
-        clearInterval(intervalId);
-      }
-
-    }, TEXT_DISPLAY_INTERVAL);
-
+    setInterval(() => {
+      setShowCursor((x) => !x);
+    }, 800);
   }, []);
 
   function renderDataFetchingText() {
-    var text = curMessageString;
+    // return "Fetching data...";
+    var text = `
+    > initializing groovy beats...
+    > loading the best DJs...
+    > downloading podcasts...
+    > grabbing a spicy with...
+    > welcome to bar... `;
     text += (showCursor) ? "|" : "";
     return text;
   }
