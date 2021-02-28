@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "react-native-swift": "^1.2.3",
+    "react-native-track-player": "^1.2.3"
+  }
+}
