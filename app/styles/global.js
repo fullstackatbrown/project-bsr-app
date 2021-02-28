@@ -62,9 +62,6 @@ export const globalStyles = StyleSheet.create({
     // alignItems: 'center',
     paddingLeft: '5%'
   },
-<<<<<<< HEAD
-  
-=======
   containerLogo: {
     backgroundColor: "#F5ECD5",
     // flex: 1,
@@ -90,7 +87,6 @@ export const globalStyles = StyleSheet.create({
     // alignItems: 'center',
     paddingLeft: '15%',
   }, 
->>>>>>> e2d86f247c7a5d0081e051445fa040393e62bb39
   
   // background: {
   //   backgroundColor: "#FAF8F0",

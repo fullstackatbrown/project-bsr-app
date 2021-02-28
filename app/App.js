@@ -1,6 +1,9 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+// import TrackPlayer from 'react-native-track-player';
+import SoundPlayer from 'react-native-sound-player'
+
 
 import RootDrawer from './routes/rootDrawer';
 
@@ -13,6 +16,7 @@ const MyTheme = {
 };
 
 const App = () => {
+  
   return (
     <NavigationContainer theme={MyTheme}>
       <RootDrawer />
