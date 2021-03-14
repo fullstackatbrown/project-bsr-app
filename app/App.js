@@ -23,12 +23,16 @@ const App = () => {
   // replace with actual data fetching function
   function getData() {
     console.log("fetching data...");
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve('resolved');
-      }, 2000);
-      // }, 0);
-    });
+    fetch(
+            "https://spinitron.com/api/spins?access-token=994is4yYXo18_ku-t_pQCaci",
+        )
+        .then(response => {
+            return response
+        })
+
+        .catch(function (error) {
+            console.log(error);
+        });
   }
 
   useEffect(() => {
