@@ -18,26 +18,28 @@ const Header = ({ navigation }) => {
     setSwitchMode(x => !x);
   }
 
-  const toggleMode = () => {
-    // navigation.openDrawer();
-  };
-
   return (
-    <View style={headerStyles.header}>
-      <MaterialIcons name='menu' size={28} onPress={openMenu} style={headerStyles.menuIcon} />
-      <View style={headerStyles.toggleModeContainer}>
-        <MaterialIcons name='wb_sunny' size={24} />
-        <MaterialIcons name='toggle_off' size={24} onPress={toggleMode} />
-        <MaterialIcons name='nights_stay' size={24} />
+    <View style={styles.header}>
+      <View style={styles.openMenuContainer}>
+        <MaterialIcons name='menu' size={28} onPress={openMenu} style={styles.icon} />
       </View>
-      
-      <Text>Header (in shared/header.js)</Text>
+      <View style={styles.modeControlContainer}>
+        <MaterialIcons name='wb-sunny' size={24} style={styles.icon} />
+        <Switch
+          trackColor={{ false: "white", true: "white" }}
+          thumbColor={switchMode ? "black" : "#f4f3f4"}
+          ios_backgroundColor="black"
+          onValueChange={toggleSwitch}
+          value={switchMode}
+          style={styles.modeSwitch}
+        />
+        <MaterialIcons name='nights-stay' size={24} style={styles.icon} />
+      </View>
     </View>
   );
 };
 
-export const headerStyles = StyleSheet.create({
-  // TODO
+const styles = StyleSheet.create({
   header: {
     width: '100%',
     height: 100,
@@ -54,19 +56,9 @@ export const headerStyles = StyleSheet.create({
     alignItems: 'center', 
     justifyContent: 'center', 
   },
-  menuIcon: {
-    position: 'absolute',
-    left: 16,
-  },
-  // https://stackoverflow.com/questions/55258987/place-3-image-icons-in-a-row-in-react-native
-  toggleModeContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    position: 'absolute',
-    right: '5%'
-  },
-  
+  modeSwitch: {
+    transform: [{ scaleX: 0.6 }, { scaleY: 0.6 }],
+  }
 });
 
 export default Header;

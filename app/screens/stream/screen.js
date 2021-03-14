@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, Button } from 'react-native';
 import { globalStyles } from '../../styles/global';
 import { headerStyles } from '../../shared/header.js';
 import { MaterialIcons } from '@expo/vector-icons';
-import SoundPlayer from 'react-native-sound-player'
+// import SoundPlayer from 'react-native-sound-player'
 import { Audio } from 'expo-av';
 
 // try {
