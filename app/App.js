@@ -12,6 +12,7 @@ import { CustomThemeProvider } from "./ThemeContext";
 const App = () => {
   const [displayLoading, setDisplayLoading] = useState(true);
   const [loadingError, setLoadingError] = useState(false);
+  
   const MyTheme = {
     ...DefaultTheme, 
     colors: {
@@ -21,25 +22,18 @@ const App = () => {
   };
 
   // replace with actual data fetching function
-  function getData() {
-    console.log("fetching data...");
-    fetch(
-            "https://spinitron.com/api/spins?access-token=994is4yYXo18_ku-t_pQCaci",
-        )
-        .then(response => {
-            return response
-        })
-
-        .catch(function (error) {
-            console.log(error);
-        });
+  const getData = () => {
+    const data = fetch("https://spinitron.com/api/spins?access-token=994is4yYXo18_ku-t_pQCaci")
+        .then(response => response.json())
+    return data;
   }
 
   useEffect(() => {
     // consider adding a button in the loading screen component for error manual reloads
     // eg: pass setDisplayLoading in as a prop and set to false when "reload" button clicked
     if (displayLoading) {
-      getData().then(() => {
+      getData().then(data => {
+        console.log(data);
         // setDisplayLoading(true);
         setDisplayLoading(false);
         setLoadingError(false);
