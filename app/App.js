@@ -9,12 +9,13 @@ import LoadingScreen from './screens/loading/screen';
 import RootDrawer from './routes/rootDrawer';
 import { CustomThemeProvider } from "./ThemeContext";
 
-import { ShowDataProvider } from "./src/ShowDataContext";
+import { DataProvider } from "./src/DataContext";
 
 const App = () => {
   const [displayLoading, setDisplayLoading] = useState(true);
   const [loadingError, setLoadingError] = useState(false);
   const [showData, setShowData] = React.useState(null);
+  const [streamData, setStreamData] = React.useState(null);
   
   const MyTheme = {
     ...DefaultTheme, 
@@ -31,7 +32,7 @@ const App = () => {
   }
 
   // replace with actual data fetching function
-  const getData = () => {
+  const getStreamData = () => {
     const data = fetch("https://spinitron.com/api/spins?access-token=994is4yYXo18_ku-t_pQCaci")
         .then(response => response.json())
     return data;
@@ -41,10 +42,11 @@ const App = () => {
     // consider adding a button in the loading screen component for error manual reloads
     // eg: pass setDisplayLoading in as a prop and set to false when "reload" button clicked
     if (displayLoading) {
-      // getData().then(data => {
-      getData().then(data => {
+      // getStreamData().then(data => {
+      getStreamData().then(_streamData => {
         // console.log(data);
         // setDisplayLoading(true);
+        setStreamData(_streamData);
         
         getShowData().then(_showData => {
           // console.log("show data in app.js: " + JSON.stringify(_showData, null, 2));
@@ -65,9 +67,9 @@ const App = () => {
         <NavigationContainer theme={MyTheme}>
           { (displayLoading && showData) 
             ? <LoadingScreen loadingError={loadingError} />
-            : (<ShowDataProvider showData={showData}>
+            : (<DataProvider showData={showData} streamData={streamData}>
                 <RootDrawer />
-              </ShowDataProvider>)
+              </DataProvider>)
           }
         </NavigationContainer>
       </CustomThemeProvider>

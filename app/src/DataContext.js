@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-export const ShowDataContext = React.createContext();
+export const DataContext = React.createContext();
 
-export const useShowData = () => React.useContext(ShowDataContext);
+export const useShowData = () => React.useContext(DataContext);
 
-export const ShowDataProvider = (props) => {
-  // const [showData, setShowData] = React.useState(props.showData);
+export const DataProvider = (props) => {
   const [showData, setShowData] = React.useState(props.showData);
+  const [streamData, setStreamData] = React.useState(props.streamData);
 
   // const newShowData = (data) => {
   //   console.log("setting new show data from context")
@@ -17,13 +17,14 @@ export const ShowDataProvider = (props) => {
     // console.log("initilaize!!!!d ShowDataContext with: ");
     // console.log(props.showData);
     setShowData(props.showData);
+    setStreamData(props.streamData);
   }, []);
 
   return (
-    <ShowDataContext.Provider value={{ showData: showData }}>
+    <DataContext.Provider value={{ showData: showData, streamData: streamData }}>
       { props.children }
-    </ShowDataContext.Provider>
+    </DataContext.Provider>
   );
 };
 
-export default ShowDataProvider;
+export default DataProvider;

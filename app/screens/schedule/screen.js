@@ -4,7 +4,7 @@ import ScheduleCard from './ScheduleCard';
 import DropDown from './DropDown';
 import { globalStyles } from '../../styles/global';
 
-import { ShowDataContext } from '../../src/ShowDataContext';
+import { DataContext } from '../../src/DataContext';
 
 // TODO
 const Schedule = () => {
@@ -28,15 +28,15 @@ const Schedule = () => {
   const [data, setData] = useState(dummyData);
   const [day, setDay] = useState(0);
 
-  const currentShowData = useContext(ShowDataContext);
+  const currentAppData = useContext(DataContext);
 
   useEffect(() => {
-    console.log("currentShowData (in screen): " + JSON.stringify(currentShowData, null, 2));
+    console.log("currentShowData (in screen): " + JSON.stringify(currentAppData, null, 2));
     // console.log(currentShowData.showData.items[0]);
 
     const _dummyData = daysData.map((value, index) => {
       var dayData = [];
-      currentShowData.showData.items.forEach((aShow) => {
+      currentAppData.showData.items.forEach((aShow) => {
         var placeholder = {time: `8-9PM ET (MONDAy)`, host: "Caitlin Pintavorn", show: aShow.title, about: aShow.description};
         dayData.push(placeholder);
       });
@@ -74,7 +74,7 @@ const Schedule = () => {
         <Text>
           show data
           {
-          JSON.stringify(currentShowData)
+          JSON.stringify(currentAppData)
           }
         </Text>
 
