@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { globalStyles } from '../../styles/global';
+import { WebView } from 'react-native-webview';
 
 const ScheduleCard = ({time, host, show, about}) => {
 
@@ -35,6 +36,23 @@ const ScheduleCard = ({time, host, show, about}) => {
     </View>
   );
 };
+
+// const WebViewWrapper = () => {
+//     // <WebView
+//     //   originWhitelist={['*']}
+//     //   source={{ html: '<h1>Hello world</h1>' }}
+//     //   style={{ marginTop: 20 }}
+//     // />
+//   function renderHtmlText() {
+//     // return "<b> hello mortal </b>";
+//     return {__html: 'First &middot; Second'};
+
+//   }
+//   // return <div dangerouslySetInnerHTML={renderHtmlText()}/>;
+//   // return <div dangerouslySetInnerHTML={renderHtmlText()} />;
+//   return <div dangerouslySetInnerHTML={__html: {'<b> hti </b>'}} />;
+
+// }
 
 const styles = StyleSheet.create({
   cardContainer: {

@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { ScrollView, View, Text } from 'react-native';
 import ScheduleCard from './ScheduleCard';
 import DropDown from './DropDown';
 import { globalStyles } from '../../styles/global';
+
+import { ShowDataContext } from '../../src/ShowDataContext';
 
 // TODO
 const Schedule = () => {
@@ -15,7 +17,7 @@ const Schedule = () => {
 
   const dummyData = daysData.map((value, index) => {
     var dayData = [];
-    var placeholder = {time: `8-9PM ET (${value})`, host: "Caitlin Pintavorn", show: "Flip Side", about: loremIpsum};
+    var placeholder = {time: `8-9PM ET (${value})`, host: "N/A", show: "Flip Side", about: loremIpsum};
 
     for(var i = 0; i < index + 1; i++){
       dayData.push(placeholder);
@@ -25,6 +27,23 @@ const Schedule = () => {
 
   const [data, setData] = useState(dummyData);
   const [day, setDay] = useState(0);
+
+  const currentShowData = useContext(ShowDataContext);
+
+  useEffect(() => {
+    console.log("currentShowData (in screen): " + JSON.stringify(currentShowData, null, 2));
+    // console.log(currentShowData.showData.items[0]);
+
+    const _dummyData = daysData.map((value, index) => {
+      var dayData = [];
+      currentShowData.showData.items.forEach((aShow) => {
+        var placeholder = {time: `8-9PM ET (MONDAy)`, host: "Caitlin Pintavorn", show: aShow.title, about: aShow.description};
+        dayData.push(placeholder);
+      });
+      return dayData;
+    });
+    setData(_dummyData);
+  }, [])
 
   const pickerItems = daysData.map((value, index) => {
     return { label: daysData[index], value: index, key: index };
@@ -51,6 +70,13 @@ const Schedule = () => {
             about={value.about}
           />
         })}
+
+        <Text>
+          show data
+          {
+          JSON.stringify(currentShowData)
+          }
+        </Text>
 
       </View>
     </ScrollView>
