@@ -15,74 +15,32 @@ const ScheduleCard = ({time, hostLinks, show, about}) => {
     return data;
   }
 
-  // useEffect(() => {
-    // console.log(JSON.stringify(hostLinks));
-    // console.log(hostLinks[0].href);
-    // for (let i = 0; i < hostLinks.length; i++) {
-    //   console.log(hostLinks[0].href);
-    // }
-    
-    // if (hostLinks) {
-
-      // let names = ["hi", "temp"];
-      // let names = [];
-      // hostLinks.forEach(async (aLink) => {
-      //   console.log(aLink.href);
-
-      //   const response = await fetch(aLink.href);
-      //   const data = await response.json();
-
-      //   console.log(data.name);
-      //   const newName = data.name;
-      //   if (!hostNames.includes(newName)) {
-      //     let temp = hostNames;
-      //     temp.push(newName);
-      //     setHostNames(temp);
-      //   }
-      //   getHostData(aLink.href).then(data => {
-      //     console.log("data: ");
-      //     console.log(data.name)
-      //     let newName = [hostNames, data.name].join(", ");
-      //     setHostNames(newName);
-      //     // names.push(data.name);
-      //   }).catch((err) => {
-      //     console.log(err);
-      //   });
-      // });
-
-
-
-      // const url = hostLinks[0].href;
-
-      // getHostData(url).then(data => {
-      //   setHostNames(data.name);
-      // }).catch((err) => {
-      //   console.log(err);
-      // });
-
-      // let ret = names.join(", ");
-      // setHostNames(ret);
-  //   }
-
-  // }, []);
-
-
   useEffect(() => {
-    setHostNames([]);
+    let shouldResetHostName = true;
+
+    const dummyHostLinks = [
+      {
+        href: "https://spinitron.com/api/personas/145968?access-token=994is4yYXo18_ku-t_pQCaci", 
+      },
+      {
+        href: "https://spinitron.com/api/personas/97816?access-token=994is4yYXo18_ku-t_pQCaci"
+      }
+    ];
+
     if (hostLinks) {
-      // let temp = hostLinks.map((aLink) => aLink.href);
-      // setHostNames([...hostLinks]);
-      // return;
-
+      console.log("host linkkkkkkkkkkkkkkkks");
+      console.log(hostLinks);
       hostLinks.forEach(async (aLink) => {
-        console.log("link: " + aLink.href);
-
+      // dummyHostLinks.forEach(async (aLink) => {
         const response = await fetch(aLink.href);
         const data = await response.json();
-
-        console.log(data.name);
         const newName = data.name;
-        if (!hostNames.includes(newName)) {
+
+        if (shouldResetHostName) {
+          setHostNames([newName]);
+          shouldResetHostName = false;
+        }
+        else if (!hostNames.includes(newName)) {
           let temp = [...hostNames];
           temp.push(newName);
           setHostNames(temp);
@@ -90,6 +48,46 @@ const ScheduleCard = ({time, hostLinks, show, about}) => {
       })
     }
   }, [hostLinks])
+  
+  
+  // =========================================
+  
+  // const [shouldResetHostName, setShouldResetHostName] = useState(true);
+  // useEffect(() => {
+  //   setShouldResetHostName(true);
+  //   setHostNames([]);
+  // }, [hostLinks])
+
+  // const [haveReset, setHaveReset] = useState(false);
+  // const dummyHostLinks = [
+  //   {
+  //     href: "https://spinitron.com/api/personas/145968?access-token=994is4yYXo18_ku-t_pQCaci", 
+  //   },
+  //   {
+  //     href: "https://spinitron.com/api/personas/97816?access-token=994is4yYXo18_ku-t_pQCaci"
+  //   }
+  // ];
+  // useEffect(() => {
+  //   if (hostLinks && shouldResetHostName && hostNames.length === 0) {
+  //     setShouldResetHostName(false);
+  //     // setHaveReset(false);
+  //     dummyHostLinks.forEach(async (aLink) => {
+  //       const response = await fetch(aLink.href);
+  //       const data = await response.json();
+  //       const newName = data.name;
+
+  //       // if (!haveReset) {
+  //       //   setHostNames([newName]);
+  //       //   setHaveReset(true);
+  //       // }
+  //       if (!hostNames.includes(newName)) {
+  //         let temp = [...hostNames];
+  //         temp.push(newName);
+  //         setHostNames(temp);
+  //       }
+  //     })
+  //   }
+  // }, [shouldResetHostName])
 
   function toggleCollapse() {
     setShowAll(!showAll);
