@@ -3,91 +3,12 @@ import { StyleSheet, View, Text } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { globalStyles } from '../../styles/global';
 import { WebView } from 'react-native-webview';
+import HostName from './HostName';
 
 const ScheduleCard = ({time, hostLinks, show, about}) => {
 
   const [showAll, setShowAll] = useState(false);
   const [hostNames, setHostNames] = useState([]);
-
-  const getHostData = (url) => {
-    const data = fetch(url)
-        .then(response => response.json())
-    return data;
-  }
-
-  useEffect(() => {
-    let shouldResetHostName = true;
-
-    const dummyHostLinks = [
-      {
-        href: "https://spinitron.com/api/personas/145968?access-token=994is4yYXo18_ku-t_pQCaci", 
-      },
-      {
-        href: "https://spinitron.com/api/personas/97816?access-token=994is4yYXo18_ku-t_pQCaci"
-      }
-    ];
-
-    if (hostLinks) {
-      console.log("host linkkkkkkkkkkkkkkkks");
-      console.log(hostLinks);
-      hostLinks.forEach(async (aLink) => {
-      // dummyHostLinks.forEach(async (aLink) => {
-        const response = await fetch(aLink.href);
-        const data = await response.json();
-        const newName = data.name;
-
-        if (shouldResetHostName) {
-          setHostNames([newName]);
-          shouldResetHostName = false;
-        }
-        else if (!hostNames.includes(newName)) {
-          let temp = [...hostNames];
-          temp.push(newName);
-          setHostNames(temp);
-        }
-      })
-    }
-  }, [hostLinks])
-  
-  
-  // =========================================
-  
-  // const [shouldResetHostName, setShouldResetHostName] = useState(true);
-  // useEffect(() => {
-  //   setShouldResetHostName(true);
-  //   setHostNames([]);
-  // }, [hostLinks])
-
-  // const [haveReset, setHaveReset] = useState(false);
-  // const dummyHostLinks = [
-  //   {
-  //     href: "https://spinitron.com/api/personas/145968?access-token=994is4yYXo18_ku-t_pQCaci", 
-  //   },
-  //   {
-  //     href: "https://spinitron.com/api/personas/97816?access-token=994is4yYXo18_ku-t_pQCaci"
-  //   }
-  // ];
-  // useEffect(() => {
-  //   if (hostLinks && shouldResetHostName && hostNames.length === 0) {
-  //     setShouldResetHostName(false);
-  //     // setHaveReset(false);
-  //     dummyHostLinks.forEach(async (aLink) => {
-  //       const response = await fetch(aLink.href);
-  //       const data = await response.json();
-  //       const newName = data.name;
-
-  //       // if (!haveReset) {
-  //       //   setHostNames([newName]);
-  //       //   setHaveReset(true);
-  //       // }
-  //       if (!hostNames.includes(newName)) {
-  //         let temp = [...hostNames];
-  //         temp.push(newName);
-  //         setHostNames(temp);
-  //       }
-  //     })
-  //   }
-  // }, [shouldResetHostName])
 
   function toggleCollapse() {
     setShowAll(!showAll);
@@ -109,6 +30,17 @@ const ScheduleCard = ({time, hostLinks, show, about}) => {
     return textValue;
   }
 
+  function renderHostLinks() {
+    if (!hostLinks) {
+      return;
+    }
+
+    return hostLinks.map((aLink, index) => {
+      let isLast = index === hostLinks.length - 1;
+      return <HostName href={aLink.href} last={isLast}/>;
+    })
+  }
+
   return (
     <View style={styles.centeringContainer}>
       <View style={styles.cardContainer}>
@@ -117,7 +49,7 @@ const ScheduleCard = ({time, hostLinks, show, about}) => {
         </View>
 
         <Text>
-          <Text style={globalStyles.headline}>Host: </Text>{hostNames.join(", ")}
+          <Text style={globalStyles.headline}>Host: </Text> {renderHostLinks()}
         </Text>
 
         <Text>

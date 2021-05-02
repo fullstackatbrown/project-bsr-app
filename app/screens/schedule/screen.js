@@ -90,7 +90,8 @@ const styles = StyleSheet.create({
   centeringContainer: {
     width: "100%",
     justifyContent: "center",
-    paddingHorizontal: '5%'
+    paddingHorizontal: '5%',
+    paddingBottom: '5%'
   }
 });
 
