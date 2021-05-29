@@ -24,9 +24,12 @@ const Schedule = () => {
   const currentAppData = useContext(DataContext);
 
   useEffect(() => {
+    if (!currentAppData.showData) {
+      return;
+    }
     const _dummyData = dayNames.map((value, index) => {
       var dayData = [];
-      currentAppData.showData.items.forEach((aShow) => {
+      currentAppData.showData.forEach((aShow) => {
         // format: 2021-05-05T22:00:00+0000
         let startTimeString = aShow.start.slice(0, (aShow.start.length - 2)) + ":" + aShow.start.slice(aShow.start.length - 2);
         let startTime = new Date(startTimeString);

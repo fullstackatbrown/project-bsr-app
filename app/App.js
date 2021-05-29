@@ -15,7 +15,7 @@ const App = () => {
   const [displayLoading, setDisplayLoading] = useState(true);
   const [loadingError, setLoadingError] = useState(false);
   const [showData, setShowData] = React.useState(null);
-  const [streamData, setStreamData] = React.useState(null);
+  const [streamData, setStreamData] = React.useState([]);
   
   const MyTheme = {
     ...DefaultTheme, 
@@ -25,10 +25,25 @@ const App = () => {
     }
   };
 
-  const getShowData = () => {
-    const data = fetch("https://spinitron.com/api/shows?access-token=994is4yYXo18_ku-t_pQCaci")
-      .then(response => response.json())
-    return data;
+  const getShowData = async (url) => {
+
+    let showList = [];
+
+    const response = await fetch(url);
+    let data = await response.json();
+
+    // console.log("data: ")
+    // console.log(JSON.stringify(data, null, 2));
+    showList = showList.concat(data.items);
+
+    if (data.next) {
+      let temp_showList = await getShowData(data.next.href);
+      showList = showList.concat(temp_data);
+    }
+
+    // console.log(showList);
+    // return showList;
+    return showList;
   }
 
   // replace with actual data fetching function
@@ -44,12 +59,13 @@ const App = () => {
     if (displayLoading) {
       // getStreamData().then(data => {
       getStreamData().then(_streamData => {
-        // console.log(data);
+        // console.log(_streamData);
         // setDisplayLoading(true);
         setStreamData(_streamData);
         
-        getShowData().then(_showData => {
-          // console.log("show data in app.js: " + JSON.stringify(_showData, null, 2));
+        const url = "https://spinitron.com/api/shows?access-token=994is4yYXo18_ku-t_pQCaci";
+        getShowData(url).then(_showData => {
+          console.log("show data in app.js: " + JSON.stringify(_showData, null, 2));
           setShowData(_showData);
           setDisplayLoading(false);
           setLoadingError(false);
