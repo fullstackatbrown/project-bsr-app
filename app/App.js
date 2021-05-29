@@ -61,13 +61,12 @@ const App = () => {
       checkIsCurrentlyPlaying(aShow);
     });
 
-    if (data.next) {
-      let temp_showList = await getShowData(data.next.href);
-      showList = showList.concat(temp_data);
+    if (data["_links"].next) {
+      let temp_showList = await getShowData(data["_links"].next.href);
+      showList = showList.concat(temp_showList);
     }
 
     // console.log(showList);
-    // return showList;
     return showList;
   }
 
@@ -90,7 +89,9 @@ const App = () => {
         
         const url = "https://spinitron.com/api/shows?access-token=994is4yYXo18_ku-t_pQCaci";
         getShowData(url).then(_showData => {
-          console.log("show data in app.js: " + JSON.stringify(_showData, null, 2));
+          // console.log("show data in app.js: " + JSON.stringify(_showData, null, 2));
+          // _showData.sort((a,b) => (a.items.start > b.start) ? 1 : ((b.start > a.start) ? -1 : 0));
+          // _showData.sort((a,b) => (a.items.start < b.start) ? 1 : ((b.start < a.start) ? -1 : 0));
           setShowData(_showData);
           setDisplayLoading(false);
           setLoadingError(false);
