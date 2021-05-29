@@ -12,7 +12,7 @@ const Schedule = () => {
 
   const dummyData = dayNames.map((value, index) => {
     var dayData = [];
-    var placeholder = {time: `8-9PM ET (${value})`, host: "N/A", show: "Flip Side", about: "hello"};
+    var placeholder = {time: `8-9PM ET (${value})`, host: "N/A", show: "N/A", about: "N/A"};
     for(var i = 0; i < index + 1; i++){
       dayData.push(placeholder);
     }

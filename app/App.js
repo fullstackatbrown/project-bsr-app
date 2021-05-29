@@ -16,6 +16,7 @@ const App = () => {
   const [loadingError, setLoadingError] = useState(false);
   const [showData, setShowData] = React.useState(null);
   const [streamData, setStreamData] = React.useState([]);
+  const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
   
   const MyTheme = {
     ...DefaultTheme, 
@@ -24,6 +25,27 @@ const App = () => {
       background: "#F5ECD5"
     }
   };
+
+  const checkIsCurrentlyPlaying = (aShow) => {
+    // format: 2021-05-05T22:00:00+0000
+    let startTimeString = aShow.start.slice(0, (aShow.start.length - 2)) + ":" + aShow.start.slice(aShow.start.length - 2);
+    let startTime = new Date(startTimeString);
+    let endTimeString = aShow.end.slice(0, (aShow.end.length - 2)) + ":" + aShow.end.slice(aShow.end.length - 2);
+    let endTime = new Date(endTimeString);
+
+    // let timezone = startTime.toString().match(/\(([A-Za-z\s].*)\)/)[1];
+    let startString = startTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
+    let endString = endTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
+
+    let today = new Date();
+    let now = today.toLocaleString();
+
+    if (now.localeCompare(startString) && endString.localeCompare(now)) {
+      // is currently playing
+      setCurrentlyPlaying(aShow);
+    }
+
+  }
 
   const getShowData = async (url) => {
 
@@ -35,6 +57,9 @@ const App = () => {
     // console.log("data: ")
     // console.log(JSON.stringify(data, null, 2));
     showList = showList.concat(data.items);
+    showList.forEach((aShow) => {
+      checkIsCurrentlyPlaying(aShow);
+    });
 
     if (data.next) {
       let temp_showList = await getShowData(data.next.href);
@@ -83,7 +108,7 @@ const App = () => {
         <NavigationContainer theme={MyTheme}>
           { (displayLoading && showData) 
             ? <LoadingScreen loadingError={loadingError} />
-            : (<DataProvider showData={showData} streamData={streamData}>
+            : (<DataProvider showData={showData} streamData={streamData} currentlyPlaying={currentlyPlaying}>
                 <RootDrawer />
               </DataProvider>)
           }
