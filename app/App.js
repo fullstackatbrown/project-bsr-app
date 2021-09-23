@@ -15,7 +15,8 @@ const App = () => {
   const [displayLoading, setDisplayLoading] = useState(true);
   const [loadingError, setLoadingError] = useState(false);
   const [showData, setShowData] = React.useState(null);
-  const [streamData, setStreamData] = React.useState(null);
+  const [streamData, setStreamData] = React.useState([]);
+  const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
   
   const MyTheme = {
     ...DefaultTheme, 
@@ -25,10 +26,48 @@ const App = () => {
     }
   };
 
-  const getShowData = () => {
-    const data = fetch("https://spinitron.com/api/shows?access-token=994is4yYXo18_ku-t_pQCaci")
-      .then(response => response.json())
-    return data;
+  const checkIsCurrentlyPlaying = (aShow) => {
+    // format: 2021-05-05T22:00:00+0000
+    let startTimeString = aShow.start.slice(0, (aShow.start.length - 2)) + ":" + aShow.start.slice(aShow.start.length - 2);
+    let startTime = new Date(startTimeString);
+    let endTimeString = aShow.end.slice(0, (aShow.end.length - 2)) + ":" + aShow.end.slice(aShow.end.length - 2);
+    let endTime = new Date(endTimeString);
+
+    // let timezone = startTime.toString().match(/\(([A-Za-z\s].*)\)/)[1];
+    let startString = startTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
+    let endString = endTime.toLocaleString('en-US', { hour: 'numeric', hour12: true })
+
+    let today = new Date();
+    let now = today.toLocaleString();
+
+    if (now.localeCompare(startString) && endString.localeCompare(now)) {
+      // is currently playing
+      setCurrentlyPlaying(aShow);
+    }
+
+  }
+
+  const getShowData = async (url) => {
+
+    let showList = [];
+
+    const response = await fetch(url);
+    let data = await response.json();
+
+    // console.log("data: ")
+    // console.log(JSON.stringify(data, null, 2));
+    showList = showList.concat(data.items);
+    showList.forEach((aShow) => {
+      checkIsCurrentlyPlaying(aShow);
+    });
+
+    if (data["_links"].next) {
+      let temp_showList = await getShowData(data["_links"].next.href);
+      showList = showList.concat(temp_showList);
+    }
+
+    // console.log(showList);
+    return showList;
   }
 
   // replace with actual data fetching function
@@ -44,12 +83,15 @@ const App = () => {
     if (displayLoading) {
       // getStreamData().then(data => {
       getStreamData().then(_streamData => {
-        // console.log(data);
+        // console.log(_streamData);
         // setDisplayLoading(true);
         setStreamData(_streamData);
         
-        getShowData().then(_showData => {
+        const url = "https://spinitron.com/api/shows?access-token=994is4yYXo18_ku-t_pQCaci";
+        getShowData(url).then(_showData => {
           // console.log("show data in app.js: " + JSON.stringify(_showData, null, 2));
+          // _showData.sort((a,b) => (a.items.start > b.start) ? 1 : ((b.start > a.start) ? -1 : 0));
+          // _showData.sort((a,b) => (a.items.start < b.start) ? 1 : ((b.start < a.start) ? -1 : 0));
           setShowData(_showData);
           setDisplayLoading(false);
           setLoadingError(false);
@@ -67,7 +109,7 @@ const App = () => {
         <NavigationContainer theme={MyTheme}>
           { (displayLoading && showData) 
             ? <LoadingScreen loadingError={loadingError} />
-            : (<DataProvider showData={showData} streamData={streamData}>
+            : (<DataProvider showData={showData} streamData={streamData} currentlyPlaying={currentlyPlaying}>
                 <RootDrawer />
               </DataProvider>)
           }

@@ -1,10 +1,13 @@
-import React, {useEffect} from 'react';
+import React, { useEffect, useContext } from 'react';
 import { View, Text, Image, StyleSheet, Button } from 'react-native';
 import { globalStyles } from '../../styles/global';
 import { headerStyles } from '../../shared/header.js';
 import { MaterialIcons } from '@expo/vector-icons';
 // import SoundPlayer from 'react-native-sound-player'
 import { Audio } from 'expo-av';
+
+import { DataContext } from '../../src/DataContext';
+import HostName from '../../shared/HostName';
 
 // try {
 //     // play the file tone.mp3
@@ -35,6 +38,7 @@ const Stream = () => {
   // }
 
   const [sound, setSound] = React.useState();
+  const currentAppData = useContext(DataContext);
 
   async function playSound() {
     console.log('Loading Sound');
@@ -64,7 +68,29 @@ const Stream = () => {
   //     <Button title="Play Sound" onPress={playSound} />
   //   </View>
   // );
+  
+  function renderHostLinks(hostLinks) {
+    return hostLinks.map((aLink, index) => {
+      let isLast = index === hostLinks.length - 1;
+      return <HostName href={aLink.href} last={isLast}/>;
+    })
+  }
 
+  function stripParagraphTags(textValue) {
+    if (textValue.length <= 7) { // "<p></p>".length
+      return textValue;
+    }
+
+    if (textValue.substring(0, 3) === "<p>") {
+      textValue = textValue.substring(3);
+    }
+
+    if (textValue.substring(textValue.length - 4, textValue.length) === "</p>"){
+      textValue = textValue.substring(0, textValue.length - 4);
+    }
+
+    return textValue;
+  }
 
   return (
     // <Text style={globalStyles.h1}>Oh screen (in screens/stream/screen.js)</Text>
@@ -74,14 +100,28 @@ const Stream = () => {
       
 
       <View style={styles.containerTrackDetails}>
-        <Text style={globalStyles.headline}>Track: </Text>
-        <Text style={globalStyles.headline}>Artist:</Text>
+        <Text style={globalStyles.headline}>Track: 
+          { currentAppData.currentlyPlaying && 
+              currentAppData.currentlyPlaying.title }
+        </Text>
+
+        <Text>
+          <Text style={globalStyles.headline}>Artist: </Text>
+          { currentAppData.currentlyPlaying && 
+              renderHostLinks(currentAppData.currentlyPlaying["_links"].personas)}
+        </Text>
       </View> 
 
       <Text style={globalStyles.h1}>> ABOUT THE SHOW</Text>
       <View style={styles.containerHostDetails}>
         <Text style={globalStyles.headline}>Host: </Text>
-        <Text style={globalStyles.headline}>About: </Text>
+
+        <Text>
+          <Text style={globalStyles.headline}>About: </Text>
+          { currentAppData.currentlyPlaying &&
+              stripParagraphTags(currentAppData.currentlyPlaying.description) }
+        </Text>
+
       </View> 
     </View>
   );

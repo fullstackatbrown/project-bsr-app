@@ -3,7 +3,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { globalStyles } from '../../styles/global';
 import { WebView } from 'react-native-webview';
-import HostName from './HostName';
+import HostName from '../../shared/HostName';
 
 const ScheduleCard = ({time, hostLinks, show, about}) => {
 
